@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-// import Test from "./components/Test.vue";
 import WishList from "./components/WishList.vue";
 </script>
 
