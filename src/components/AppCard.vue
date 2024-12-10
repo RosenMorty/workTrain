@@ -1,12 +1,14 @@
 <template>
-  <div v-if="card.completed" class="card-is-completed">
-    <div class="card-title">{{ card.title }}</div>
-    <div class="card-description">{{ card.description }}</div>
-    <div class="card-course_duration">{{ card.course_duration }}</div>
-    <div class="card-completed"></div>
-  </div>
-  <div v-else class="card-is-not-completed">
-    Кажется, курс уже не существует…
+  <div class="card">
+    <div v-if="card.completed" class="card-is-completed">
+      <div class="card-title">{{ card.title }}</div>
+      <div class="card-description">{{ card.description }}</div>
+      <div class="card-course_duration">{{ card.course_duration }}</div>
+      <div class="card-completed"></div>
+    </div>
+    <div v-else class="card-is-not-completed">
+      Кажется, курс уже не существует…
+    </div>
   </div>
 </template>
 
@@ -49,15 +51,15 @@ const props = defineProps({
 
 .card-is-completed {
   padding: 0 6px;
-  border: 1px solid rgb(42, 182, 231);
+  /* border: 1px solid rgb(42, 182, 231); */
   color: rgb(42, 182, 231);
-  border-radius: 4px;
+  border-radius: 16px;
 }
 
 .card-is-not-completed {
   padding: 0 6px;
   border: 1px solid rgb(166, 182, 197);
   color: rgb(166, 182, 197);
-  border-radius: 4px;
+  border-radius: 16px;
 }
 </style>
