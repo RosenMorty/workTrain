@@ -5,6 +5,7 @@
     :key="item.id"
     :card="item"
     :index="index"
+    @click="emit('click-by-card', item)"
   />
 </template>
 
@@ -17,6 +18,8 @@ const props = defineProps({
     type: Array,
   },
 });
+
+const emit = defineEmits(["click-by-card"]);
 </script>
 
 <style scoped>

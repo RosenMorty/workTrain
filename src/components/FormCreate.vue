@@ -9,31 +9,36 @@
       <span>Описание:</span>
       <input type="text" v-model="newCard.description" />
     </label>
+    <label>
+      <span>Длительность:</span>
+      <input type="text" v-model="newCard.course_duration" />
+    </label>
     <button type="submit">Добавить</button>
   </form>
 </template>
 
 <script setup>
 import { ref } from "vue";
+const emit = defineEmits(["set-card"]);
 const newCard = ref({
   id: 0,
   title: "",
   description: "",
   course_duration: "",
-  completed: false,
+  completed: true,
 });
 
-// const setTitle = (event) => {
-//   const value = event.target.value;
-//   newCard.title = value;
-// };
-// const setDescription = (event) => {
-//   const value = event.target.value;
-//   newCard.description = value;
-// };
+const setTitle = (event) => {
+  const value = event.target.value;
+  newCard.title = value;
+};
+const setDescription = (event) => {
+  const value = event.target.value;
+  newCard.description = value;
+};
 
 const addCard = () => {
-  console.log(newCard);
+  emit("set-card", newCard.value);
 };
 </script>
 

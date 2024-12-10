@@ -1,18 +1,23 @@
 <template>
   <div class="container">
-    <FormCreate />
-    <WishList :cards="cards" />
+    <FormEdit
+      :card="cardForEdit"
+      @set-card="updateCard"
+      @save-card="saveCard"
+    />
+    <WishList :cards="cards" @click-by-card="openCardForEdit" />
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import WishList from "./components/WishList.vue";
-import FormCreate from "./components/FormCreate.vue";
 import "./assets/global.css";
+import FormEdit from "./components/FormEdit.vue";
 
 const cards = ref([
   {
+    id: 1,
     title: "Python-разработчик",
     description:
       "Описание: На Python пишкт сайты, приложения, игры и чат-боты. Netflix, Spotify, Google и Youtube написаны на Python.",
@@ -20,6 +25,7 @@ const cards = ref([
     completed: true,
   },
   {
+    id: 2,
     title: "Графический дизайнер",
     description:
       "Описание: Научим делать бренды узнаваемымми через создание логотипов, графики для рекламы, упаковки и не только.",
@@ -27,6 +33,7 @@ const cards = ref([
     completed: true,
   },
   {
+    id: 3,
     title: "Веб-разработчик",
     description:
       "Описание: Веб-разработчик создает сайты, сервисы и приложения, которыми мы ежедневно пользуемся.",
@@ -34,6 +41,7 @@ const cards = ref([
     completed: true,
   },
   {
+    id: 4,
     title: "Инженер по тестированию",
     description:
       "Описание: Вы научитесь находить ошибки в работе сайтов и приложений с помощью Java, JavaScript или Python.",
@@ -41,36 +49,65 @@ const cards = ref([
     completed: true,
   },
   {
+    id: 5,
     title: 5,
     description: "123",
     course_duration: "da da da",
     completed: false,
   },
   {
+    id: 6,
     title: 6,
     description: "123",
     course_duration: "da da da",
     completed: false,
   },
   {
+    id: 7,
     title: 7,
     description: "123",
     course_duration: "da da da",
     completed: false,
   },
   {
+    id: 8,
     title: 8,
     description: "123",
     course_duration: "da da da",
     completed: false,
   },
   {
+    id: 9,
     title: 9,
     description: "123",
     course_duration: "da da da",
     completed: false,
   },
 ]);
+
+const cardForEdit = ref({
+  id: 0,
+  title: "",
+  description: "",
+  course_duration: "",
+  completed: false,
+});
+
+const saveCard = () => {
+  const newCard = Object.assign({}, cardForEdit.value);
+  console.log(newCard);
+  console.log(cards.value);
+
+  cards.value = cards.value.map((el) => (el.id === newCard.id ? newCard : el));
+};
+
+const updateCard = (card) => {
+  cardForEdit.value = card;
+};
+
+const openCardForEdit = (card) => {
+  cardForEdit.value = Object.assign({}, card);
+};
 </script>
 
 <style scoped>

@@ -25,8 +25,8 @@ const props = defineProps({
 
 <style>
 .card {
+  cursor: pointer;
   width: 300px;
-  padding: 24px 24px 16px;
   background-color: #fff;
   border-radius: 16px;
   margin-bottom: 16px;
@@ -50,16 +50,17 @@ const props = defineProps({
 }
 
 .card-is-completed {
-  padding: 0 6px;
-  /* border: 1px solid rgb(42, 182, 231); */
+  padding: 24px 24px 16px;
+  border: 1px solid rgb(42, 182, 231);
   color: rgb(42, 182, 231);
   border-radius: 16px;
 }
 
 .card-is-not-completed {
-  padding: 0 6px;
+  width: 300px;
+  text-align: center;
   border: 1px solid rgb(166, 182, 197);
-  color: rgb(166, 182, 197);
+  color: #e1a0ad;
   border-radius: 16px;
 }
 </style>
