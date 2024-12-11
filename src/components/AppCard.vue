@@ -13,6 +13,7 @@
 </template>
 
 <script setup>
+import FormEdit from "./FormEdit.vue";
 const props = defineProps({
   index: {
     type: Number,

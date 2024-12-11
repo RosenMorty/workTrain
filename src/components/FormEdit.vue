@@ -1,8 +1,7 @@
 <template>
   <div>
     <button @click="openModal">Форма редактирования</button>
-
-    <div class="modal" v-if="isModalOpen">
+    <div class="modal" v-if="props.cardModalIsOpen">
       <div class="modal-content">
         <h2>Форма редактирование</h2>
         <form @submit.prevent="saveCard" class="form">
@@ -35,20 +34,28 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-const isModalOpen = ref(false);
 const props = defineProps({
   card: {
     type: Object,
   },
+  cardModalIsOpen: {
+    type: Boolean,
+  },
 });
-const emit = defineEmits(["set-card", "save-card", "open-modal"]);
+
+const emit = defineEmits([
+  "set-card",
+  "save-card",
+  "open-modal",
+  "close-modal",
+]);
 
 const setTitle = (event) => {
   const data = Object.assign({}, props.card);
   data.title = event.target.value;
   emit("set-card", data);
 };
+
 const setDescription = (event) => {
   const data = Object.assign({}, props.card);
   data.description = event.target.value;
@@ -66,11 +73,11 @@ const saveCard = () => {
 };
 
 const openModal = () => {
-  isModalOpen.value = true;
+  emit("open-modal");
 };
 
 const closeModal = () => {
-  isModalOpen.value = false;
+  emit("close-modal");
 };
 </script>
 

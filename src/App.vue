@@ -3,7 +3,11 @@
     <FormEdit
       :card="cardForEdit"
       @set-card="updateCard"
+      :card-modal-is-open="cardModalIsOpen"
       @save-card="saveCard"
+      @open-modal="openModal"
+      @close-modal="closeModal"
+      style="margin-top: 25px"
     />
     <WishList :cards="cards" @click-by-card="openCardForEdit" />
   </div>
@@ -14,6 +18,8 @@ import { ref } from "vue";
 import WishList from "./components/WishList.vue";
 import "./assets/global.css";
 import FormEdit from "./components/FormEdit.vue";
+
+const cardModalIsOpen = ref(false);
 
 const cards = ref([
   {
@@ -95,9 +101,6 @@ const cardForEdit = ref({
 
 const saveCard = () => {
   const newCard = Object.assign({}, cardForEdit.value);
-  console.log(newCard);
-  console.log(cards.value);
-
   cards.value = cards.value.map((el) => (el.id === newCard.id ? newCard : el));
 };
 
@@ -106,7 +109,22 @@ const updateCard = (card) => {
 };
 
 const openCardForEdit = (card) => {
+  openModal();
   cardForEdit.value = Object.assign({}, card);
+};
+
+const openModal = () => {
+  cardModalIsOpen.value = true;
+};
+const closeModal = () => {
+  cardModalIsOpen.value = false;
+  cardForEdit.value = {
+    id: 0,
+    title: "",
+    description: "",
+    course_duration: "",
+    completed: false,
+  };
 };
 </script>
 
