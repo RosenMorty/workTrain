@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="openModal">Форма редактирования</button>
     <div class="modal" v-if="props.cardModalIsOpen">
       <div class="modal-content">
         <h2>Форма редактирование</h2>
