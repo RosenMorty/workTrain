@@ -14,13 +14,7 @@
       :cards="cards"
       @click-by-card="openCardForEdit"
     />
-    <img
-      v-else
-      src="../public/loading.gif"
-      alt="loading"
-      style="width: 400px"
-      width="400"
-    />
+    <img v-else src="/loading.gif" alt="loading" />
   </div>
 </template>
 
@@ -29,6 +23,7 @@ import { ref } from "vue";
 import WishList from "./components/WishList.vue";
 import "./assets/global.css";
 import FormEdit from "./components/FormEdit.vue";
+import FormCreate from "./components/FormCreate.vue";
 
 const cardModalIsOpen = ref(false);
 
@@ -107,8 +102,8 @@ const loadCards = () => {
         course_duration: "da da da",
         completed: false,
       },
-      (cardsIsLoading.value = false),
     ];
+    cardsIsLoading.value = false;
   }, 2000);
 };
 

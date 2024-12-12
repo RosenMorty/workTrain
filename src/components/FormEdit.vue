@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="modal" v-if="props.cardModalIsOpen">
+    <div class="modal" v-if="cardModalIsOpen">
       <div class="modal-content">
         <h2>Форма редактирование</h2>
         <form @submit.prevent="saveCard" class="form">
@@ -47,6 +47,7 @@ const emit = defineEmits([
   "save-card",
   "open-modal",
   "close-modal",
+  "create-card",
 ]);
 
 const setTitle = (event) => {
