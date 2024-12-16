@@ -1,5 +1,5 @@
 <template>
-  <h2>Форма создания {{ newCard.title }}</h2>
+  <h1>Форма создания {{ newCard.title }}</h1>
   <form @submit.prevent="addCard" class="form">
     <label>
       <span>Названине:</span>
