@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <FormCreate 
+    @set-card="addCard"
+    ></FormCreate>
     <FormEdit
       :card="cardForEdit"
       @set-card="updateCard"
@@ -7,6 +10,7 @@
       @save-card="saveCard"
       @open-modal="openModal"
       @close-modal="closeModal"
+      @delete-modal="deleteModal"
       style="margin-top: 25px"
     />
     <WishList
@@ -123,6 +127,12 @@ const saveCard = () => {
   closeModal();
 };
 
+const deleteModal = (card) => {
+  const newCard = Object.assign({}, cardForEdit.value);
+  cards.value = cards.value.filter((card) => card.id !== newCard.id)
+  closeModal();
+}
+
 const updateCard = (card) => {
   cardForEdit.value = card;
 };
@@ -131,6 +141,10 @@ const openCardForEdit = (card) => {
   openModal();
   cardForEdit.value = Object.assign({}, card);
 };
+
+const addCard = (card) => {
+  cards.value.unshift(card)
+}
 
 const openModal = () => {
   cardModalIsOpen.value = true;
