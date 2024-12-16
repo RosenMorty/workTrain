@@ -47,7 +47,6 @@ const emit = defineEmits([
   "save-card",
   "open-modal",
   "close-modal",
-  "create-card",
 ]);
 
 const setTitle = (event) => {
