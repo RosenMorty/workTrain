@@ -2,7 +2,10 @@
   <div>
     <div class="modal" v-if="cardModalIsOpen">
       <div class="modal-content">
-        <h2>Форма редактирование</h2>
+        <div class="hedEdit">
+          <h2>Форма редактирование</h2>
+          <button class="closeBtn" style="background-color: white;" type="button" @click="closeModal"></button>
+        </div>
         <form @submit.prevent="saveCard" class="form">
           <label>
             <span>Названине:</span>
@@ -25,7 +28,6 @@
             />
           </label>
           <button type="submit">Сохранить</button>
-          <button type="button" @click="closeModal">Закрыть</button>
           <button type="button" @click="deleteModal">Удалить</button>
         </form>
       </div>
@@ -88,6 +90,20 @@ const deleteModal = () => {
 </script>
 
 <style>
+.hedEdit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.closeBtn {
+  width: 20px;
+  height: 20px;
+  background-image: url(public/17047.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: none;
+}
+
 .modal {
   display: flex;
   justify-content: center;
