@@ -24,8 +24,9 @@
               @input="setCurseDuration"
             />
           </label>
-          <button type="submit" style="margin-bottom: 10px">Сохранить</button>
+          <button type="submit">Сохранить</button>
           <button type="button" @click="closeModal">Закрыть</button>
+          <button type="button" @click="deleteModal">Удалить</button>
         </form>
       </div>
     </div>
@@ -48,6 +49,7 @@ const emit = defineEmits([
   "open-modal",
   "close-modal",
   "create-card",
+  "delete-modal",
 ]);
 
 const setTitle = (event) => {
@@ -79,6 +81,10 @@ const openModal = () => {
 const closeModal = () => {
   emit("close-modal");
 };
+
+const deleteModal = () => {
+  emit("delete-modal")
+}
 </script>
 
 <style>
@@ -139,6 +145,7 @@ input[type="text"]:focus {
 }
 
 button {
+  margin-bottom: 10px;
   padding: 10px;
   background-color: #007bff;
   color: #fff;
