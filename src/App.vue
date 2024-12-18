@@ -1,25 +1,14 @@
 <template>
   <div class="container">
-    <div>
-      <FormCreate
-        @set-card="addCard"
-        :card-open-create="cardOpenCreate"
-        @close-create-model="closeCreateModal"
-      ></FormCreate>
-      <button @click="openCreateModal">Добавить новую карточку</button>
-    </div>
-    <div>
-      <FormEdit
-        :card="cardForEdit"
-        :card-modal-is-open="cardModalIsOpen"
-        @set-card="updateCard"
-        @save-card="saveCard"
-        @open-modal="openModal"
-        @close-modal="closeModal"
-        @delete-modal="deleteModal"
-        style="margin-top: 25px"
-      />
-    </div>
+    <FormEdit
+      :card="cardForEdit"
+      @set-card="updateCard"
+      :card-modal-is-open="cardModalIsOpen"
+      @save-card="saveCard"
+      @open-modal="openModal"
+      @close-modal="closeModal"
+      style="margin-top: 25px"
+    />
     <WishList
       v-if="!cardsIsLoading"
       :cards="cards"
@@ -145,12 +134,6 @@ const saveCard = () => {
   closeModal();
 };
 
-const deleteModal = (card) => {
-  const newCard = Object.assign({}, cardForEdit.value);
-  cards.value = cards.value.filter((card) => card.id !== newCard.id);
-  closeModal();
-};
-
 const updateCard = (card) => {
   cardForEdit.value = card;
 };
@@ -158,21 +141,6 @@ const updateCard = (card) => {
 const openCardForEdit = (card) => {
   openModal();
   cardForEdit.value = Object.assign({}, card);
-};
-
-const closeCreateModal = () => {
-  cardOpenCreate.value = false;
-  mode = "";
-};
-
-const addCard = (card) => {
-  cards.value.unshift(card);
-  closeCreateModal();
-};
-
-const openCreateModal = () => {
-  cardOpenCreate.value = true;
-  toggleNew();
 };
 
 const openModal = () => {

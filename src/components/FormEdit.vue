@@ -2,15 +2,7 @@
   <div>
     <div class="modal" v-if="cardModalIsOpen">
       <div class="modal-content">
-        <div class="hedEdit">
-          <h2>Форма редактирование</h2>
-          <button
-            class="closeBtn"
-            style="background-color: white"
-            type="button"
-            @click="closeModal"
-          ></button>
-        </div>
+        <h2>Форма редактирование</h2>
         <form @submit.prevent="saveCard" class="form">
           <label>
             <span>Названине:</span>
@@ -32,10 +24,8 @@
               @input="setCurseDuration"
             />
           </label>
-          <div style="display: flex; justify-content: space-between">
-            <button type="submit">Сохранить</button>
-            <button type="button" @click="deleteModal">Удалить</button>
-          </div>
+          <button type="submit" style="margin-bottom: 10px">Сохранить</button>
+          <button type="button" @click="closeModal">Закрыть</button>
         </form>
       </div>
     </div>
@@ -57,6 +47,7 @@ const emit = defineEmits([
   "open-modal",
   "save-card",
   "close-modal",
+  "create-card",
 ]);
 
 const setTitle = (event) => {
@@ -84,27 +75,9 @@ const saveCard = () => {
 const closeModal = () => {
   emit("close-modal");
 };
-
-const deleteModal = () => {
-  emit("delete-modal");
-};
 </script>
 
 <style>
-.hedEdit {
-  display: flex;
-  justify-content: space-between;
-}
-
-.closeBtn {
-  width: 20px;
-  height: 20px;
-  background-position: center;
-  background-size: contain;
-  background-repeat: none;
-  background-image: url(../../public/cross.svg);
-}
-
 .modal {
   display: flex;
   justify-content: center;
