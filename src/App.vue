@@ -7,10 +7,10 @@
         @close-create-model="closeCreateModal"
       ></FormCreate>
     </div>
-    <button @click="openCreateModal">Добавить новую карточку</button>
-    <div>
+    <button @click="toggleMode">ПОМЕНЯТЬ МОД</button>
+    <button @click="openCreateModal">Создать новую карточку</button>
+    <div v-if="mode === 'edit'">
       <FormEdit
-        v-if="mode === 'edit'"
         :card="cardForEdit"
         :card-modal-is-open="cardModalIsOpen"
         @set-card="updateCard"
@@ -136,14 +136,10 @@ const loadCards = () => {
 
 loadCards();
 
-let mode = ref("new");
+const mode = ref("new");
 
-const toggleNew = () => {
-  mode = "edit";
-};
-
-const toggleEdit = () => {
-  mode = "new";
+const toggleMode = () => {
+  mode.value = mode.value === "new" ? "edit" : "new";
 };
 
 const cardForEdit = ref({
@@ -187,12 +183,10 @@ const addCard = (card) => {
 
 const openCreateModal = () => {
   cardOpenCreate.value = true;
-  toggleNew();
 };
 
 const openModal = () => {
   cardModalIsOpen.value = true;
-  toggleEdit();
   console.log("Я открылся");
 };
 const closeModal = () => {

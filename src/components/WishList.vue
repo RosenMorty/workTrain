@@ -4,6 +4,7 @@
     v-for="(item, index) in cards"
     :key="item.id"
     :card="item"
+    :click="openModal"
     :index="index"
     @click="emit('click-by-card', item)"
   />
@@ -16,6 +17,9 @@ import AppCard from "./AppCard.vue";
 const props = defineProps({
   cards: {
     type: Array,
+  },
+  openModal: {
+    type: Boolean,
   },
 });
 
