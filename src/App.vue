@@ -1,15 +1,16 @@
 <template>
   <div class="container">
-    <div>
+    <div v-if="mode === 'new'">
       <FormCreate
-        @set-card="addCard"
         :card-open-create="cardOpenCreate"
+        @set-card="addCard"
         @close-create-model="closeCreateModal"
       ></FormCreate>
-      <button @click="openCreateModal">Добавить новую карточку</button>
     </div>
+    <button @click="openCreateModal">Добавить новую карточку</button>
     <div>
       <FormEdit
+        v-if="mode === 'edit'"
         :card="cardForEdit"
         :card-modal-is-open="cardModalIsOpen"
         @set-card="updateCard"
@@ -20,6 +21,19 @@
         style="margin-top: 25px"
       />
     </div>
+    <!-- <button @click="openCreateModal">Добавить новую карточку</button>
+    <EditOrCreate
+      :card="cardForEdit"
+      :card-modal-is-open="cardModalIsOpen"
+      :card-open-create="cardOpenCreate"
+      @set-card="addCard"
+      @close-create-model="closeCreateModal"
+      @save-card="saveCard"
+      @open-modal="openModal"
+      @close-modal="closeModal"
+      @delete-modal="deleteModal"
+    >
+    </EditOrCreate> -->
     <WishList
       v-if="!cardsIsLoading"
       :cards="cards"
@@ -30,8 +44,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, provide, inject } from "vue";
 import WishList from "./components/WishList.vue";
+import EditOrCreate from "./components/EditOrCreate.vue";
 import "./assets/global.css";
 import FormEdit from "./components/FormEdit.vue";
 import FormCreate from "./components/FormCreate.vue";
@@ -121,14 +136,14 @@ const loadCards = () => {
 
 loadCards();
 
-let mode = ref();
+let mode = ref("new");
 
 const toggleNew = () => {
-  mode = "new";
+  mode = "edit";
 };
 
 const toggleEdit = () => {
-  mode = "edit";
+  mode = "new";
 };
 
 const cardForEdit = ref({
@@ -162,11 +177,11 @@ const openCardForEdit = (card) => {
 
 const closeCreateModal = () => {
   cardOpenCreate.value = false;
-  mode = "";
 };
 
 const addCard = (card) => {
   cards.value.unshift(card);
+  console.log(card);
   closeCreateModal();
 };
 
@@ -178,10 +193,10 @@ const openCreateModal = () => {
 const openModal = () => {
   cardModalIsOpen.value = true;
   toggleEdit();
+  console.log("Я открылся");
 };
 const closeModal = () => {
   cardModalIsOpen.value = false;
-  mode = "";
   cardForEdit.value = {
     id: 0,
     title: "",

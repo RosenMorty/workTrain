@@ -54,9 +54,9 @@ const props = defineProps({
 
 const emit = defineEmits([
   "set-card",
-  "open-modal",
   "save-card",
   "close-modal",
+  "delete-modal",
 ]);
 
 const setTitle = (event) => {
