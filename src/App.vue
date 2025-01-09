@@ -1,39 +1,18 @@
 <template>
   <div class="container">
-    <div v-if="mode === 'new'">
-      <FormCreate
-        :card-open-create="cardOpenCreate"
-        @set-card="addCard"
-        @close-create-model="closeCreateModal"
-      ></FormCreate>
-    </div>
-    <button @click="toggleMode">ПОМЕНЯТЬ МОД</button>
-    <button @click="openCreateModal">Создать новую карточку</button>
-    <div v-if="mode === 'edit'">
-      <FormEdit
-        :card="cardForEdit"
-        :card-modal-is-open="cardModalIsOpen"
-        @set-card="updateCard"
-        @save-card="saveCard"
-        @open-modal="openModal"
-        @close-modal="closeModal"
-        @delete-modal="deleteModal"
-        style="margin-top: 25px"
-      />
-    </div>
-    <!-- <button @click="openCreateModal">Добавить новую карточку</button>
+    <button @click="openCreateModal">Добавить карточку</button>
     <EditOrCreate
       :card="cardForEdit"
       :card-modal-is-open="cardModalIsOpen"
       :card-open-create="cardOpenCreate"
-      @set-card="addCard"
-      @close-create-model="closeCreateModal"
+      @add-card="addCard"
+      @set-card="updateCard"
+      @close-create-modal="closeCreateModal"
       @save-card="saveCard"
-      @open-modal="openModal"
       @close-modal="closeModal"
       @delete-modal="deleteModal"
     >
-    </EditOrCreate> -->
+    </EditOrCreate>
     <WishList
       v-if="!cardsIsLoading"
       :cards="cards"
@@ -48,8 +27,6 @@ import { ref, provide, inject } from "vue";
 import WishList from "./components/WishList.vue";
 import EditOrCreate from "./components/EditOrCreate.vue";
 import "./assets/global.css";
-import FormEdit from "./components/FormEdit.vue";
-import FormCreate from "./components/FormCreate.vue";
 
 const cardModalIsOpen = ref(false);
 const cardOpenCreate = ref(false);
@@ -136,8 +113,6 @@ const loadCards = () => {
 
 loadCards();
 
-const mode = ref("new");
-
 const toggleMode = () => {
   mode.value = mode.value === "new" ? "edit" : "new";
 };
@@ -147,7 +122,7 @@ const cardForEdit = ref({
   title: "",
   description: "",
   course_duration: "",
-  completed: false,
+  completed: true,
 });
 
 const saveCard = () => {
@@ -176,9 +151,15 @@ const closeCreateModal = () => {
 };
 
 const addCard = (card) => {
-  cards.value.unshift(card);
-  console.log(card);
+  (card.id = Date.now()), cards.value.unshift(card);
   closeCreateModal();
+  cardForEdit.value = {
+    id: 0,
+    title: "",
+    description: "",
+    course_duration: "",
+    completed: true,
+  };
 };
 
 const openCreateModal = () => {
@@ -187,7 +168,6 @@ const openCreateModal = () => {
 
 const openModal = () => {
   cardModalIsOpen.value = true;
-  console.log("Я открылся");
 };
 const closeModal = () => {
   cardModalIsOpen.value = false;

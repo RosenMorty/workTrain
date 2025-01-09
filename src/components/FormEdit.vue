@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="modal" v-if="cardModalIsOpen">
+    <div class="modal">
       <div class="modal-content">
         <div class="hedEdit">
           <h2>Форма редактирование</h2>
@@ -53,10 +53,10 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  "set-card",
   "save-card",
   "close-modal",
   "delete-modal",
+  "set-card",
 ]);
 
 const setTitle = (event) => {

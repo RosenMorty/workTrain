@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="modal" v-if="cardOpenCreate">
+    <div class="modal">
       <div>
         <div class="modal-content">
           <div class="hedEdit">
-            <h2>Форма создания {{ newCard.title }}</h2>
+            <h2>Форма создания {{ card.title }}</h2>
             <button
               class="closeBtn"
               style="background-color: white"
@@ -15,15 +15,23 @@
           <form @submit.prevent="addCard" class="form">
             <label>
               <span>Названине:</span>
-              <input type="text" v-model="newCard.title" />
+              <input type="text" :value="card.title" @input="setTitle" />
             </label>
             <label>
               <span>Описание:</span>
-              <input type="text" v-model="newCard.description" />
+              <input
+                type="text"
+                :value="card.description"
+                @input="setDescription"
+              />
             </label>
             <label>
               <span>Длительность:</span>
-              <input type="text" v-model="newCard.course_duration" />
+              <input
+                type="text"
+                :value="card.course_duration"
+                @input="setCurseDuration"
+              />
             </label>
             <button type="submit">Добавить</button>
           </form>
@@ -36,7 +44,7 @@
 <script setup>
 import { ref } from "vue";
 const props = defineProps({
-  newCard: {
+  card: {
     type: Object,
   },
   cardOpenCreate: {
@@ -44,25 +52,36 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["set-card", "card-open-create", "new-card"]);
-const newCard = ref({
-  id: 0,
-  title: "",
-  description: "",
-  course_duration: "",
-  completed: true,
-});
+const setTitle = (event) => {
+  const data = Object.assign({}, props.card);
+  data.title = event.target.value;
+  emit("set-card", data);
+};
+
+const setDescription = (event) => {
+  const data = Object.assign({}, props.card);
+  data.description = event.target.value;
+  emit("set-card", data);
+};
+
+const setCurseDuration = (event) => {
+  const data = Object.assign({}, props.card);
+  data.course_duration = event.target.value;
+  emit("set-card", data);
+};
+
+const emit = defineEmits(["set-card", "close-create-modal", "add-card"]);
 
 const closeCreateModal = () => {
-  emit("close-create-model");
+  emit("close-create-modal");
 };
 
 const addCard = () => {
-  emit("set-card", {
-    title: newCard.value.title,
-    description: newCard.value.description,
-    course_duration: newCard.value.course_duration,
-    completed: newCard.value.completed,
+  emit("add-card", {
+    title: props.card.title,
+    description: props.card.description,
+    course_duration: props.card.course_duration,
+    completed: true,
   });
 };
 </script>

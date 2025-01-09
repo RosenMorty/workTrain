@@ -1,20 +1,23 @@
 <template>
   <div>
     <FormCreate
-      @set-card="addCard"
+      v-if="cardOpenCreate"
+      :card="card"
       :card-open-create="cardOpenCreate"
-      @close-create-model="closeCreateModal"
+      @set-card="setCard"
+      @add-card="addCard"
+      @close-create-modal="closeCreateModal"
     >
     </FormCreate>
     <FormEdit
-      :card="cardForEdit"
+      v-if="cardModalIsOpen"
+      :card="card"
       :card-modal-is-open="cardModalIsOpen"
+      style="margin-top: 25px"
       @set-card="updateCard"
       @save-card="saveCard"
-      @open-modal="openModal"
-      @close-modal="closeModal"
       @delete-modal="deleteModal"
-      style="margin-top: 25px"
+      @close-modal="closeModal"
     ></FormEdit>
   </div>
 </template>
@@ -25,8 +28,9 @@ import FormEdit from "./FormEdit.vue";
 
 import { ref } from "vue";
 const props = defineProps({
-  newCard: {
+  card: {
     type: Object,
+    default: {},
   },
   cardOpenCreate: {
     type: Boolean,
@@ -43,15 +47,20 @@ const emit = defineEmits([
   "save-card",
   "close-modal",
   "delete-modal",
+  "close-create-modal",
+  "add-card",
 ]);
-const newCard = ref({});
+
+const setCard = (card) => {
+  emit("set-card", card);
+};
 
 const closeCreateModal = () => {
-  emit("close-create-model");
+  emit("close-create-modal");
 };
 
 const addCard = (card) => {
-  emit("set-card", card);
+  emit("add-card", card);
 };
 
 const openModal = (card) => {
@@ -64,6 +73,10 @@ const saveCard = () => {
 
 const closeModal = () => {
   emit("close-modal");
+};
+
+const updateCard = (card) => {
+  emit("set-card", card);
 };
 
 const deleteModal = () => {
